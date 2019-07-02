@@ -1,0 +1,34 @@
+version: "3.5"
+
+networks:
+  network:
+    driver: overlay
+
+services:
+  db_cassandra:
+    container_name: db_cassandra
+    image: cassandra:latest
+    ports:
+      - 19042:9042
+      - 19160:9160
+    environment:
+      SET_CONTAINER_TIMEZONE: "true"
+      CONTAINER_TIMEZONE: Asia/Bangkok
+      MAX_HEAP_SIZE: 512M
+      HEAP_NEWSIZE: 128M
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: 50m
+#        max-file: 1
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.01'
+          memory: 512M
+#    networks:
+#      network:
+#        aliases:
+#          - dbcassandra
