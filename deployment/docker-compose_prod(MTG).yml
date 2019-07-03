@@ -1,0 +1,30 @@
+#stack name : database-sbmdev
+version: '3.5'
+networks:
+  network:
+    driver: overlay
+services:
+  db_cassandra:
+    container_name: db_cassandra
+    image: mtg8-registry-01.true.th:5000/cassandra:latest
+    ports:
+      - 9042:9042
+      - 9160:9160
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      SET_CONTAINER_TIMEZONE: "true"
+      CONTAINER_TIMEZONE: Asia/Bangkok
+      MAX_HEAP_SIZE: 512M
+      HEAP_NEWSIZE: 128M
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 1024M
+      restart_policy:
+        condition: on-failure
+        max_attempts: 2
+      placement:
+        constraints: [node.hostname == mtg1-sbmdata-dk-02]
