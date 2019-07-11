@@ -9,11 +9,11 @@ services:
     container_name: db_cassandra
     image: cassandra:latest
     ports:
-      - 19042:9042
-      - 19160:9160
+      - 9042:9042
+      - 9160:9160
     environment:
       SET_CONTAINER_TIMEZONE: "true"
-      CONTAINER_TIMEZONE: Asia/Bangkok
+      TZ: Asia/Bangkok
       MAX_HEAP_SIZE: 512M
       HEAP_NEWSIZE: 128M
 #    logging:
